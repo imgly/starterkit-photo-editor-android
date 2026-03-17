@@ -37,19 +37,15 @@ fun PhotoConfigurationBuilder.onPreExport() {
     showLoading = true
 }
 
-// highlight-starter-kit-photo-on-export-byte-buffer
 suspend fun PhotoConfigurationBuilder.onExportByteBuffer(): ByteBuffer = export(
     block = requireNotNull(editorContext.engine.scene.get()),
     mimeType = MimeType.PNG,
 )
-// highlight-starter-kit-photo-on-export-byte-buffer
 
-// highlight-starter-kit-photo-on-post-export
 suspend fun PhotoConfigurationBuilder.onPostExport(byteBuffer: ByteBuffer) {
     val file = writeToFile(byteBuffer = byteBuffer, mimeType = MimeType.PNG)
     shareFile(file = file, mimeType = MimeType.PNG)
 }
-// highlight-starter-kit-photo-on-post-export
 
 fun PhotoConfigurationBuilder.onExportError(error: Exception) {
     if (error is CancellationException) {

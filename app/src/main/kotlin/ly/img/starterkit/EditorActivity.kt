@@ -1,6 +1,5 @@
 package ly.img.starterkit
 
-// highlight-starter-kit-activity-full
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,7 +26,6 @@ class EditorActivity : ComponentActivity() {
     }
 }
 
-// highlight-starter-kit-composable
 @Composable
 private fun PhotoEditor(onClose: (error: Throwable?) -> Unit) {
     Editor(
@@ -38,5 +36,3 @@ private fun PhotoEditor(onClose: (error: Throwable?) -> Unit) {
         onClose = onClose,
     )
 }
-// highlight-starter-kit-composable
-// highlight-starter-kit-activity-full

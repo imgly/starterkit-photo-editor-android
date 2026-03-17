@@ -51,7 +51,6 @@ fun PhotoConfigurationBuilder.onPreCreateScene() {
     editorContext.engine.editor.setSettingBoolean(keypath = "doubleClickToCropEnabled", value = false)
 }
 
-// highlight-starter-kit-photo-on-create-scene
 suspend fun PhotoConfigurationBuilder.onCreateScene() {
     getOrCreateSceneFromImage("https://cdn.img.ly/assets/demo/v3/ly.img.image/images/sample_1.jpg".toUri())
 }
@@ -74,9 +73,7 @@ suspend fun PhotoConfigurationBuilder.getOrCreateSceneFromImage(
         editorContext.engine.block.setHeight(block = page, value = size.height)
     }
 }
-// highlight-starter-kit-photo-on-create-scene
 
-// highlight-starter-kit-photo-on-load-asset-sources
 suspend fun PhotoConfigurationBuilder.onLoadAssetSources() {
     // Load asset sources in parallel from content.json files
     coroutineScope {
@@ -111,7 +108,6 @@ suspend fun PhotoConfigurationBuilder.onLoadAssetSources() {
         editorContext.engine.asset.addSource(textAssetSource)
     }
 }
-// highlight-starter-kit-photo-on-load-asset-sources
 
 fun PhotoConfigurationBuilder.onPostCreateScene() {
     // Do nothing
