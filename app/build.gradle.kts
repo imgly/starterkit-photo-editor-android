@@ -8,7 +8,7 @@ val packageSuffix = (gradle as ExtensionAware).extra["packageSuffix"] as? String
 val appName = (gradle as ExtensionAware).extra["appName"] as? String ?: "Unknown"
 
 android {
-    namespace = "ly.img.starterkit.$packageSuffix"
+    namespace = "ly.img.starterkit"
     compileSdk = 36
 
     defaultConfig {

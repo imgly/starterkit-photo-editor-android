@@ -16,6 +16,9 @@ import ly.img.engine.DesignBlock
 import ly.img.engine.SceneLayout
 import ly.img.engine.populateAssetSource
 
+/**
+ * The callback that is invoked when the editor is created.
+ */
 suspend fun PhotoConfigurationBuilder.onCreate(
     preCreateScene: suspend PhotoConfigurationBuilder.() -> Unit = {
         onPreCreateScene()
@@ -43,6 +46,9 @@ suspend fun PhotoConfigurationBuilder.onCreate(
     }
 }
 
+/**
+ * The callback that is invoked before the scene is created.
+ */
 fun PhotoConfigurationBuilder.onPreCreateScene() {
     showLoading = true
     editorContext.engine.editor.setSettingBoolean(keypath = "page/moveChildrenWhenCroppingFill", value = true)
@@ -51,8 +57,11 @@ fun PhotoConfigurationBuilder.onPreCreateScene() {
     editorContext.engine.editor.setSettingBoolean(keypath = "doubleClickToCropEnabled", value = false)
 }
 
+/**
+ * The callback that is responsible for creating the scene.
+ */
 suspend fun PhotoConfigurationBuilder.onCreateScene() {
-    getOrCreateSceneFromImage("https://cdn.img.ly/assets/demo/v3/ly.img.image/images/sample_1.jpg".toUri())
+    getOrCreateSceneFromImage(imageUri = "https://cdn.img.ly/assets/demo/v3/ly.img.image/images/sample_1.jpg".toUri())
 }
 
 suspend fun PhotoConfigurationBuilder.getOrCreateSceneFromImage(
@@ -74,6 +83,9 @@ suspend fun PhotoConfigurationBuilder.getOrCreateSceneFromImage(
     }
 }
 
+/**
+ * The callback that loads all the required assets sources.
+ */
 suspend fun PhotoConfigurationBuilder.onLoadAssetSources() {
     // Load asset sources in parallel from content.json files
     coroutineScope {
@@ -109,10 +121,18 @@ suspend fun PhotoConfigurationBuilder.onLoadAssetSources() {
     }
 }
 
+/**
+ * The callback that is invoked right after [onCreateScene], after the scene is created.
+ */
 fun PhotoConfigurationBuilder.onPostCreateScene() {
-    // Do nothing
+    val page = requireNotNull(editorContext.engine.scene.getCurrentPage())
+    editorContext.engine.block.setScopeEnabled(block = page, key = "layer/move", enabled = false)
 }
 
+/**
+ * The callback that is invoked as the last step of [onCreate].
+ * It always runs, no matter success or failure on previous steps.
+ */
 fun PhotoConfigurationBuilder.onCreateFinally() {
     showLoading = false
 }

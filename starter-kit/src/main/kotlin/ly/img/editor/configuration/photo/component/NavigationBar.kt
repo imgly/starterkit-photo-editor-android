@@ -15,12 +15,16 @@ import ly.img.editor.core.component.rememberRedo
 import ly.img.editor.core.component.rememberTogglePreviewMode
 import ly.img.editor.core.component.rememberUndo
 
+/**
+ * The configuration of the component that is displayed as horizontal list of items at the top of the editor.
+ */
 @Composable
 fun PhotoConfigurationBuilder.rememberNavigationBar() = NavigationBar.remember {
     scope = {
         val historyTrigger by EditorTrigger.remember {
             editorContext.engine.editor.onHistoryUpdated()
         }
+        // Update NavigationBar whenever the editor history changes
         remember(this, historyTrigger) {
             NavigationBar.Scope(parentScope = this)
         }

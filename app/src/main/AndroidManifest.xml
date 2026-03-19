@@ -7,7 +7,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name="ly.img.starterkit.EditorActivity"
+            android:name="ly.img.starterkit.MainActivity"
             android:exported="true"
             android:theme="@style/android:Theme.Material.Light.NoActionBar">
             <intent-filter>

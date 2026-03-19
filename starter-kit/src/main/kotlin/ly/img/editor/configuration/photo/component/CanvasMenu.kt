@@ -13,6 +13,10 @@ import ly.img.editor.core.component.rememberDuplicate
 import ly.img.editor.core.component.rememberSelectGroup
 import ly.img.editor.core.component.rememberSendBackward
 
+/**
+ * The configuration of the component that is displayed as horizontal list of items next to
+ * the selected design block.
+ */
 @Composable
 fun PhotoConfigurationBuilder.rememberCanvasMenu() = CanvasMenu.remember {
     listBuilder = {

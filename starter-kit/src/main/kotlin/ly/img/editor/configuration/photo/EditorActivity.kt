@@ -1,15 +1,17 @@
-package ly.img.starterkit
+package ly.img.editor.configuration.photo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
 import ly.img.editor.Editor
-import ly.img.editor.configuration.photo.PhotoConfigurationBuilder
 import ly.img.editor.core.configuration.EditorConfiguration
 import ly.img.editor.core.configuration.remember
 
+/**
+ * Encapsulated editor to be used in legacy activity navigation.
+ * Delete this file if you are using jetpack compose navigation.
+ */
 class EditorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,21 +20,16 @@ class EditorActivity : ComponentActivity() {
         // This is required, so that the editor is displayed full screen on relatively older devices.
         enableEdgeToEdge()
         setContent {
-            PhotoEditor {
-                // Close the editor, ignore any errors.
-                finish()
-            }
+            Editor(
+                license = null, // pass null or empty for evaluation mode with watermark
+                configuration = {
+                    EditorConfiguration.remember(::PhotoConfigurationBuilder)
+                },
+                onClose = {
+                    // Finish the activity, potentially handle errors.
+                    finish()
+                },
+            )
         }
     }
-}
-
-@Composable
-private fun PhotoEditor(onClose: (error: Throwable?) -> Unit) {
-    Editor(
-        license = null, // pass null or empty for evaluation mode with watermark
-        configuration = {
-            EditorConfiguration.remember(::PhotoConfigurationBuilder)
-        },
-        onClose = onClose,
-    )
 }

@@ -18,10 +18,14 @@ import ly.img.editor.core.component.rememberStickersLibrary
 import ly.img.editor.core.component.rememberTextLibrary
 import ly.img.editor.core.state.EditorViewMode
 
+/**
+ * The configuration of the component that is displayed as horizontal list of items at the bottom of the editor.
+ */
 @Composable
 fun PhotoConfigurationBuilder.rememberDock() = Dock.remember {
     visible = {
         val state by editorContext.state.collectAsState()
+        // Hide Dock in preview mode
         state.viewMode !is EditorViewMode.Preview
     }
     listBuilder = {

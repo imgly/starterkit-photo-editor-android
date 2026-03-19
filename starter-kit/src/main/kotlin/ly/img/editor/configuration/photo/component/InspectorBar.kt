@@ -9,7 +9,6 @@ import ly.img.editor.core.component.remember
 import ly.img.editor.core.component.rememberAdjustments
 import ly.img.editor.core.component.rememberBlur
 import ly.img.editor.core.component.rememberCrop
-import ly.img.editor.core.component.rememberDefaultScope
 import ly.img.editor.core.component.rememberDelete
 import ly.img.editor.core.component.rememberDuplicate
 import ly.img.editor.core.component.rememberEditText
@@ -23,22 +22,13 @@ import ly.img.editor.core.component.rememberReplace
 import ly.img.editor.core.component.rememberSelectGroup
 import ly.img.editor.core.component.rememberShape
 import ly.img.editor.core.component.rememberTextBackground
-import ly.img.engine.DesignBlockType
 
+/**
+ * The configuration of the component that is displayed as horizontal list of items at the
+ * bottom of the editor when a design block is selected.
+ */
 @Composable
 fun PhotoConfigurationBuilder.rememberInspectorBar() = InspectorBar.remember {
-    scope = {
-        InspectorBar.rememberDefaultScope(
-            parentScope = this,
-            selectedDesignBlock = {
-                val engine = editorContext.engine
-                engine.block.findAllSelected().firstOrNull()?.takeIf {
-                    engine.block.getType(it) != DesignBlockType.Page.key ||
-                        engine.editor.getSettingBoolean("page/selectWhenNoBlocksSelected").not()
-                }
-            },
-        )
-    }
     listBuilder = {
         InspectorBar.ListBuilder.remember {
             add { InspectorBar.Button.rememberReplace() } // Image, Sticker, Audio

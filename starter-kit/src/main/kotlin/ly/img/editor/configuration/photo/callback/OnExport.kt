@@ -5,6 +5,9 @@ import ly.img.editor.configuration.photo.PhotoConfigurationBuilder
 import ly.img.engine.MimeType
 import java.nio.ByteBuffer
 
+/**
+ * The callback that is invoked when the export button is clicked.
+ */
 suspend fun PhotoConfigurationBuilder.onExport(
     preExport: suspend PhotoConfigurationBuilder.() -> Unit = {
         onPreExport()
@@ -33,20 +36,32 @@ suspend fun PhotoConfigurationBuilder.onExport(
     }
 }
 
+/**
+ * The callback that is invoked before the export is started.
+ */
 fun PhotoConfigurationBuilder.onPreExport() {
     showLoading = true
 }
 
+/**
+ * The callback that exports the content of the editor into [ByteBuffer].
+ */
 suspend fun PhotoConfigurationBuilder.onExportByteBuffer(): ByteBuffer = export(
     block = requireNotNull(editorContext.engine.scene.get()),
     mimeType = MimeType.PNG,
 )
 
+/**
+ * The callback that is invoked after [onExportByteBuffer] and handles its output.
+ */
 suspend fun PhotoConfigurationBuilder.onPostExport(byteBuffer: ByteBuffer) {
     val file = writeToFile(byteBuffer = byteBuffer, mimeType = MimeType.PNG)
     shareFile(file = file, mimeType = MimeType.PNG)
 }
 
+/**
+ * The callback that is invoked in case any of the export functions throw an exception.
+ */
 fun PhotoConfigurationBuilder.onExportError(error: Exception) {
     if (error is CancellationException) {
         throw error
@@ -54,6 +69,10 @@ fun PhotoConfigurationBuilder.onExportError(error: Exception) {
     this.error = error
 }
 
+/**
+ * The callback that is invoked as the last step of [onExportByteBuffer].
+ * It always runs, no matter success or failure on previous steps.
+ */
 fun PhotoConfigurationBuilder.onExportFinally() {
     showLoading = false
 }

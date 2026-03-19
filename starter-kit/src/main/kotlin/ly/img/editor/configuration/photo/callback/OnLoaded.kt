@@ -9,6 +9,9 @@ import ly.img.editor.configuration.photo.PhotoConfigurationBuilder
 import ly.img.editor.core.component.data.Insets
 import ly.img.editor.core.state.EditorViewMode
 
+/**
+ * The callback that is invoked when the editor is loaded and ready to be used.
+ */
 suspend fun PhotoConfigurationBuilder.onLoaded() {
     coroutineScope {
         launch { observeEditorViewMode() }
@@ -16,6 +19,7 @@ suspend fun PhotoConfigurationBuilder.onLoaded() {
             observeEditorEditMode(
                 extraInsets = { Insets(value = if (it == "Crop") 24.dp else 0.dp) },
             ) { editMode ->
+                // Allow resize only in crop mode.
                 editorContext.engine.editor.setSettingBoolean(
                     keypath = "page/allowResizeInteraction",
                     value = editMode == "Crop",
@@ -25,6 +29,9 @@ suspend fun PhotoConfigurationBuilder.onLoaded() {
     }
 }
 
+/**
+ * Function that zooms to the current page when the [EditorViewMode] is preview.
+ */
 suspend fun PhotoConfigurationBuilder.observeEditorViewMode() {
     editorContext.state
         .distinctUntilChangedBy { it.viewMode to it.insets }
